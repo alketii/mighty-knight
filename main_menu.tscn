@@ -54,6 +54,8 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 textures/normal = ExtResource( 5 )
+params/resize_mode = 0
+params/stretch_mode = 0
 
 [node name="logo" type="Sprite" parent="."]
 
@@ -66,12 +68,12 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 605.0
-margin/top = 562.0
-margin/right = 878.0
-margin/bottom = 670.0
+margin/left = 493.0
+margin/top = 617.0
+margin/right = 992.0
+margin/bottom = 725.0
 custom_fonts/font = ExtResource( 7 )
-text = "For Desktop:\nJump - Arrow Up\nAttack - Left CTRL"
+text = "game by https://github.com/alketii"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
