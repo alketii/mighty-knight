@@ -62,22 +62,41 @@ params/stretch_mode = 0
 transform/pos = Vector2( 801.765, 385.503 )
 texture = ExtResource( 6 )
 
-[node name="Label" type="Label" parent="."]
+[node name="open_url" type="TextureButton" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 525.0
+margin/top = 661.0
+margin/right = 764.0
+margin/bottom = 701.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+params/resize_mode = 0
+params/stretch_mode = 0
+
+[node name="Label" type="Label" parent="open_url"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 493.0
-margin/top = 617.0
-margin/right = 992.0
-margin/bottom = 725.0
+margin/left = -506.0
+margin/top = 5.0
+margin/right = 742.0
+margin/bottom = 46.0
 custom_fonts/font = ExtResource( 7 )
-text = "game by https://github.com/alketii"
+text = "alketii.github.io"
+align = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
 [connection signal="button_down" from="play" to="." method="_on_play_button_down"]
+
+[connection signal="pressed" from="open_url" to="." method="_on_open_url_pressed"]
 
 

@@ -9,3 +9,7 @@ func _ready():
 
 func _on_play_button_down():
 	get_tree().change_scene("res://main.tscn")
+
+
+func _on_open_url_pressed():
+	OS.shell_open("https://alketii.github.io/index.html")
