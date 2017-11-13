@@ -1,12 +1,11 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://main_menu.gd" type="Script" id=1]
 [ext_resource path="res://assets/bg/bg_2.png" type="Texture" id=2]
 [ext_resource path="res://assets/fonts/amaranth_128_black.fnt" type="BitmapFont" id=3]
 [ext_resource path="res://assets/misc/main_menu.png" type="Texture" id=4]
-[ext_resource path="res://assets/icons/attack.png" type="Texture" id=5]
-[ext_resource path="res://assets/misc/logo.png" type="Texture" id=6]
-[ext_resource path="res://assets/fonts/amaranth_32_real_black.fnt" type="BitmapFont" id=7]
+[ext_resource path="res://assets/misc/logo.png" type="Texture" id=5]
+[ext_resource path="res://assets/fonts/amaranth_32_real_black.fnt" type="BitmapFont" id=6]
 
 [node name="main_menu" type="Node2D"]
 
@@ -23,9 +22,9 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 845.0
+margin/left = 858.0
 margin/top = 35.0
-margin/right = 1221.0
+margin/right = 1234.0
 margin/bottom = 172.0
 custom_fonts/font = ExtResource( 3 )
 text = "0"
@@ -40,27 +39,10 @@ max_lines_visible = -1
 transform/pos = Vector2( 248.117, 340.391 )
 texture = ExtResource( 4 )
 
-[node name="play" type="TextureButton" parent="."]
-
-focus/ignore_mouse = false
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 1112.0
-margin/top = 552.0
-margin/right = 1240.0
-margin/bottom = 680.0
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-textures/normal = ExtResource( 5 )
-params/resize_mode = 0
-params/stretch_mode = 0
-
 [node name="logo" type="Sprite" parent="."]
 
-transform/pos = Vector2( 801.765, 385.503 )
-texture = ExtResource( 6 )
+transform/pos = Vector2( 1001.63, 357.744 )
+texture = ExtResource( 5 )
 
 [node name="open_url" type="TextureButton" parent="."]
 
@@ -78,25 +60,25 @@ shortcut = null
 params/resize_mode = 0
 params/stretch_mode = 0
 
-[node name="Label" type="Label" parent="open_url"]
+[node name="play" type="Button" parent="."]
 
-focus/ignore_mouse = true
+focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = -506.0
-margin/top = 5.0
-margin/right = 742.0
-margin/bottom = 46.0
-custom_fonts/font = ExtResource( 7 )
-text = "alketii.github.io"
-align = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[connection signal="button_down" from="play" to="." method="_on_play_button_down"]
+size_flags/vertical = 2
+margin/left = 943.0
+margin/top = 589.0
+margin/right = 1232.0
+margin/bottom = 679.0
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Start"
+flat = false
 
 [connection signal="pressed" from="open_url" to="." method="_on_open_url_pressed"]
+
+[connection signal="pressed" from="play" to="." method="_on_play_pressed"]
 
 

@@ -7,9 +7,5 @@ func _ready():
 	var highscore = config.get_value("general","highscore",0)
 	get_node("high_score").set_text(str(highscore))
 
-func _on_play_button_down():
+func _on_play_pressed():
 	get_tree().change_scene("res://main.tscn")
-
-
-func _on_open_url_pressed():
-	OS.shell_open("https://alketii.github.io/index.html")
