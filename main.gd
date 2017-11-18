@@ -7,11 +7,13 @@ const sword = preload("res://assets/swords/sword.tscn")
 const spikes = preload("res://assets/spikes/spikes.tscn")
 const life = preload("res://assets/misc/life.tscn")
 const points = preload("res://assets/misc/points.tscn")
+const menu = preload("res://main_menu.tscn")
+
 onready var W_SIZE = OS.get_window_size()
 onready var places = [592,464,336,208]
 var coins = 0
 var coins_life = 0
-var lifes = 3
+var lifes = 0
 var tile_z = -2
 
 var active_zombies = false
@@ -24,7 +26,8 @@ func _ready():
 	config.load("user://settings.cfg")
 	highscore = config.get_value("general","highscore",0)
 	randomize()
-	update_lifes()
+	for i in range(1, 4):
+		add_life()
 	init_tiles()
 	
 func init_tiles():
@@ -74,7 +77,7 @@ func create_random():
 		add_child(tile_new)
 
 func _on_restart_pressed():
-	get_tree().change_scene("res://main_menu.tscn")
+	get_tree().reload_current_scene()
 
 
 func _on_random_tile_timeout():
@@ -97,11 +100,14 @@ func add_life():
 
 func update_lifes():
 	if lifes >= 0:
-		for c in get_node("gui/lifes").get_children():
-			c.queue_free()
-		for i in range(lifes):
+		var childs = get_node("gui/lifes").get_children()
+		if lifes < childs.size():
+			var life_node = childs[lifes]
+			life_node.get_node("AnimationPlayer").play("loose")
+			life_node.get_node("AnimationPlayer").connect("finished", life_node, "queue_free")
+		elif lifes > childs.size():
 			var life_new = life.instance()
-			life_new.set_pos(Vector2(128+i*40,32))
+			life_new.set_pos(Vector2(88+lifes*40,32))
 			get_node("gui/lifes").add_child(life_new)
 	else:
 		if coins > highscore:
