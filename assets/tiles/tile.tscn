@@ -8,18 +8,25 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 64, 16 )
+extents = Vector2( 64, 20 )
 
 [sub_resource type="SpriteFrames" id=2]
 
-animations = [ { "frames":[ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ], "loop":true, "name":"default", "speed":5.0 } ]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 66, 320 )
 
-[node name="tile" type="StaticBody2D" groups=[ "tile" ]]
+[node name="tile" type="StaticBody2D" groups=[
+"tile",
+]]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
@@ -34,7 +41,9 @@ constant_angular_velocity = 0.0
 friction = 0.0
 bounce = 0.0
 script/script = ExtResource( 1 )
-__meta__ = { "_edit_lock_":true }
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="sprites" type="AnimatedSprite" parent="."]
 
@@ -53,7 +62,9 @@ _update_shape_index = 0
 
 rect = Rect2( -64, -64, 128, 128 )
 
-[node name="Area2D" type="Area2D" parent="." groups=[ "tile" ]]
+[node name="Area2D" type="Area2D" parent="." groups=[
+"tile",
+]]
 
 input/pickable = true
 shapes/0/shape = SubResource( 3 )

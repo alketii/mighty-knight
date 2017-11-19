@@ -128,6 +128,17 @@ func add_points(amount,pos):
 		add_life()
 		coins_life -= 100
 	get_node("gui/coins").set_text(str(coins))
+	var r = 1 - (coins/400.0)
+	if (coins/400.0) > 1:
+		r = (coins/400.0) - 1
+	var g = 1 - (coins/200.0)
+	if (coins/200.0) > 1:
+		g = (coins/200.0) - 1
+	var b = 1 - (coins/100.0)
+	if (coins/100.0) > 1:
+		b = (coins/100.0) - 1
+	get_node("gui/coins").set("custom_colors/font_color", Color(r, g, b))
+	get_node("gui/coins/AnimationPlayer").play("point")
 
 func _on_activate_zombies_timeout():
 	active_zombies = true

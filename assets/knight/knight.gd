@@ -1,6 +1,5 @@
 extends KinematicBody2D
 
-
 var jump_allow = false
 var just_jumped = false
 var jumping = false
@@ -31,7 +30,7 @@ func _fixed_process(delta):
 		get_node("Camera2D").clear_current()
 		set_pos(Vector2(-256,-256))
 	else:
-		if check_down.is_colliding():
+		if check_down.is_colliding() or is_colliding():
 			vertical_speed = 0
 			jump_allow = true
 		else:

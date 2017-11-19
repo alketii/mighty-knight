@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://main_menu.gd" type="Script" id=1]
 [ext_resource path="res://assets/bg/bg_2.png" type="Texture" id=2]
@@ -6,6 +6,68 @@
 [ext_resource path="res://assets/misc/main_menu.png" type="Texture" id=4]
 [ext_resource path="res://assets/misc/logo.png" type="Texture" id=5]
 [ext_resource path="res://assets/fonts/amaranth_32_real_black.fnt" type="BitmapFont" id=6]
+
+[sub_resource type="ColorRamp" id=2]
+
+offsets = FloatArray( 0, 1 )
+colors = ColorArray( 1, 1, 1, 0.0980392, 1, 1, 1, 0 )
+
+[sub_resource type="Animation" id=1]
+
+resource/name = "enter"
+length = 0.6
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("logo:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.2, 0.6 ),
+"transitions": FloatArray( 0.25, 0.25, 1 ),
+"update": 0,
+"values": [ Vector2( 1600, 360 ), Vector2( 1600, 360 ), Vector2( 1000, 360 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("logo:transform/scale")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 0.2, 0.6 ),
+"transitions": FloatArray( 0.25, 0.25, 1 ),
+"update": 0,
+"values": [ Vector2( 0.25, 1 ), Vector2( 0.25, 1 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("logo/Particles2D:config/emitting")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = {
+"times": FloatArray( 0, 0.2 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("mighty_knight:transform/pos")
+tracks/3/interp = 1
+tracks/3/imported = false
+tracks/3/keys = {
+"times": FloatArray( 0, 0.2, 0.6 ),
+"transitions": FloatArray( 0.25, 0.25, 1 ),
+"update": 0,
+"values": [ Vector2( -256, 414 ), Vector2( -256, 414 ), Vector2( 248, 414 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("mighty_knight/Particles2D:config/emitting")
+tracks/4/interp = 1
+tracks/4/imported = false
+tracks/4/keys = {
+"times": FloatArray( 0, 0.5 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [node name="main_menu" type="Node2D"]
 
@@ -36,13 +98,68 @@ max_lines_visible = -1
 
 [node name="mighty_knight" type="Sprite" parent="."]
 
-transform/pos = Vector2( 248, 340 )
+transform/pos = Vector2( -256, 414 )
 texture = ExtResource( 4 )
+
+[node name="Particles2D" type="Particles2D" parent="mighty_knight"]
+
+visibility/behind_parent = true
+config/amount = 16
+config/lifetime = 0.2
+config/process_mode = 1
+config/local_space = false
+config/texture = ExtResource( 4 )
+params/direction = 0.0
+params/spread = 0.0
+params/linear_velocity = 0.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 1.0
+params/final_size = 1.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+color/color_ramp = SubResource( 2 )
 
 [node name="logo" type="Sprite" parent="."]
 
-transform/pos = Vector2( 1000, 360 )
+transform/pos = Vector2( 1600, 360 )
+transform/scale = Vector2( 0.25, 1 )
 texture = ExtResource( 5 )
+
+[node name="Particles2D" type="Particles2D" parent="logo"]
+
+visibility/behind_parent = true
+config/amount = 16
+config/lifetime = 0.2
+config/process_mode = 1
+config/local_space = false
+config/texture = ExtResource( 5 )
+params/direction = 360.0
+params/spread = 180.0
+params/linear_velocity = 20.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 1.0
+params/final_size = 1.2
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+randomness/direction = 1.0
+randomness/spread = 1.0
+color/color_ramp = SubResource( 2 )
 
 [node name="open_url" type="TextureButton" parent="."]
 
@@ -76,6 +193,17 @@ enabled_focus_mode = 2
 shortcut = null
 text = "Start"
 flat = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/enter = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "enter"
 
 [connection signal="pressed" from="open_url" to="." method="_on_open_url_pressed"]
 
