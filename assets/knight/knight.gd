@@ -64,7 +64,10 @@ func _fixed_process(delta):
 			get_node("/root/main/gui/jump/Sprites").show()
 		else:
 			get_node("/root/main/gui/jump/Sprites").hide()
-		
+		var parallax = get_node("/root/main/ParallaxBackground/ParallaxLayer/bg")
+		if parallax.get_pos().x <= -1450:
+			parallax.set_pos(Vector2(0, 0))
+		parallax.set_pos(Vector2(parallax.get_pos().x-0.5, 0))
 		move(Vector2(move_speed, vertical_speed))
 
 

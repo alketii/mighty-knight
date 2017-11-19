@@ -100,9 +100,9 @@ motion/mirroring = Vector2( 1450, 0 )
 
 [node name="bg" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
 
-transform/pos = Vector2( 640, 360 )
 z/z = -999
 texture = ExtResource( 3 )
+centered = false
 
 [node name="gui" type="CanvasLayer" parent="."]
 

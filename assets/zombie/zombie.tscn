@@ -25,7 +25,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 32, 58 )
+extents = Vector2( 30, 52 )
 
 [sub_resource type="SpriteFrames" id=2]
 
@@ -75,7 +75,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=4]
 
-length = 0.6
+length = 0.5
 loop = true
 step = 0.1
 tracks/0/type = "value"
@@ -83,7 +83,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0, 0.6 ),
+"times": FloatArray( 0, 0.5 ),
 "transitions": FloatArray( 1, 1 ),
 "update": 0,
 "values": [ 0, 9 ]
@@ -95,7 +95,7 @@ tracks/0/keys = {
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 4 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -122,6 +122,7 @@ autoplay = "walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
+transform/pos = Vector2( 0, 4 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
