@@ -135,10 +135,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 1112.0
-margin/top = 552.0
-margin/right = 1240.0
-margin/bottom = 680.0
+margin/left = 1048.0
+margin/top = 496.0
+margin/right = 1244.0
+margin/bottom = 692.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -162,7 +162,7 @@ autoplay = ""
 
 visibility/opacity = 0.0
 visibility/behind_parent = true
-transform/pos = Vector2( 64, 64 )
+transform/pos = Vector2( 96, 96 )
 texture = ExtResource( 6 )
 
 [node name="jump" type="TextureButton" parent="gui"]
@@ -173,9 +173,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 40.0
-margin/top = 552.0
-margin/right = 168.0
-margin/bottom = 680.0
+margin/top = 496.0
+margin/right = 236.0
+margin/bottom = 692.0
 toggle_mode = false
 click_on_press = true
 enabled_focus_mode = 2
@@ -204,15 +204,15 @@ transform/pos = Vector2( -40, -552 )
 
 visibility/opacity = 0.5
 visibility/behind_parent = true
-transform/pos = Vector2( 104, 616 )
-transform/scale = Vector2( 2, 2 )
+transform/pos = Vector2( 136, 648 )
+transform/scale = Vector2( 0.474786, 0.474786 )
 texture = ExtResource( 8 )
 
 [node name="Sprite1" type="Sprite" parent="gui/jump/Sprites"]
 
-visibility/opacity = 0.5
+visibility/opacity = 0.385609
 visibility/behind_parent = true
-transform/pos = Vector2( 104, 616 )
+transform/pos = Vector2( 136, 648 )
 transform/scale = Vector2( 2, 2 )
 texture = ExtResource( 7 )
 

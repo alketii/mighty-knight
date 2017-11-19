@@ -25,7 +25,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 32, 57 )
+extents = Vector2( 30, 55 )
 
 [sub_resource type="Animation" id=2]
 
@@ -71,7 +71,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=5]
 
-length = 0.5
+length = 0.4
 loop = true
 step = 0.1
 tracks/0/type = "value"
@@ -79,7 +79,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0, 0.5 ),
+"times": FloatArray( 0, 0.4 ),
 "transitions": FloatArray( 1, 1 ),
 "update": 0,
 "values": [ 0, 9 ]
@@ -89,7 +89,7 @@ tracks/0/keys = {
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, -0.35849, 0 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -127,7 +127,6 @@ autoplay = "run"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-transform/pos = Vector2( -0.35849, 0 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
@@ -154,15 +153,15 @@ drag_margin/bottom = 0.2
 
 [node name="check_down" type="RayCast2D" parent="."]
 
-transform/pos = Vector2( -28.4602, 57.7109 )
+transform/pos = Vector2( -32, 56 )
 enabled = true
-cast_to = Vector2( 32, 0 )
+cast_to = Vector2( 64, 0 )
 layer_mask = 1
 type_mask = 15
 
 [node name="check_right" type="RayCast2D" parent="."]
 
-transform/pos = Vector2( 33.3392, -30.1128 )
+transform/pos = Vector2( 34, -30 )
 enabled = true
 cast_to = Vector2( 0, 64 )
 layer_mask = 1
@@ -170,9 +169,9 @@ type_mask = 15
 
 [node name="check_up" type="RayCast2D" parent="."]
 
-transform/pos = Vector2( -17.3721, -57.8633 )
+transform/pos = Vector2( -22, -56 )
 enabled = true
-cast_to = Vector2( 32, 0 )
+cast_to = Vector2( 42, 0 )
 layer_mask = 1
 type_mask = 15
 

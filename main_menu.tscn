@@ -36,12 +36,12 @@ max_lines_visible = -1
 
 [node name="mighty_knight" type="Sprite" parent="."]
 
-transform/pos = Vector2( 248.117, 340.391 )
+transform/pos = Vector2( 248, 340 )
 texture = ExtResource( 4 )
 
 [node name="logo" type="Sprite" parent="."]
 
-transform/pos = Vector2( 1001.63, 357.744 )
+transform/pos = Vector2( 1000, 360 )
 texture = ExtResource( 5 )
 
 [node name="open_url" type="TextureButton" parent="."]

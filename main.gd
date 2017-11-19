@@ -9,18 +9,19 @@ const life = preload("res://assets/misc/life.tscn")
 const points = preload("res://assets/misc/points.tscn")
 const menu = preload("res://main_menu.tscn")
 
-onready var W_SIZE = OS.get_window_size()
-onready var places = [592,464,336,208]
 var coins = 0
 var coins_life = 0
+var highscore = 0
+
 var lifes = 0
 var tile_z = -2
 
 var active_zombies = false
 var active_spikes = false
 
+onready var W_SIZE = OS.get_window_size()
+onready var places = [592,464,336,208]
 onready var config = ConfigFile.new()
-var highscore = 0
 
 func _ready():
 	config.load("user://settings.cfg")
@@ -136,7 +137,6 @@ func _on_activate_swords_timeout():
 
 func _on_activate_spikes_timeout():
 	active_spikes = true
-
 
 func _on_restart_timeout():
 	get_tree().reload_current_scene()
