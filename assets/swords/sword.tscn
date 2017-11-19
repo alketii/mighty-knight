@@ -165,6 +165,7 @@ _update_shape_index = 0
 
 config/amount = 32
 config/lifetime = 0.1
+config/emitting = false
 config/process_mode = 1
 config/local_space = false
 config/texture = ExtResource( 2 )

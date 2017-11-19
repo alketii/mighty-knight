@@ -78,7 +78,9 @@ func create_random():
 		add_child(tile_new)
 
 func _on_restart_pressed():
-	get_tree().reload_current_scene()
+	get_node("gui/restart").set_disabled(true)
+	get_node("CanvasLayer/AnimationPlayer").connect("finished", get_tree(), "reload_current_scene")
+	get_node("CanvasLayer/AnimationPlayer").play("stop")
 
 
 func _on_random_tile_timeout():

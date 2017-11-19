@@ -1,6 +1,15 @@
 extends Area2D
 
+onready var idle = get_node("idle").get_animation("idle").duplicate()
+
 func _ready():
+	var angle = deg2rad(randi() % 360)
+	idle.track_set_key_value(0, 0, Vector2(4*cos(angle), 4*sin(angle)))
+	idle.track_set_key_value(0, 1, Vector2(-4*cos(angle), -4*sin(angle)))
+	idle.track_set_key_value(0, 2, Vector2(4*cos(angle), 4*sin(angle)))
+	get_node("idle").add_animation("idle_bis", idle)
+	get_node("idle").set_speed(rand_range(0.5, 0.75))
+	get_node("idle").play("idle_bis")
 	set_fixed_process(true)
 
 func _fixed_process(delta):
