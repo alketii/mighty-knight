@@ -13,8 +13,8 @@ script/script = ExtResource( 1 )
 
 [node name="bg" type="Sprite" parent="."]
 
-transform/pos = Vector2( 640, 360 )
 texture = ExtResource( 2 )
+centered = false
 
 [node name="high_score" type="Label" parent="."]
 
