@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=1]
+[gd_scene load_steps=27 format=1]
 
 [ext_resource path="res://assets/knight/knight.gd" type="Script" id=1]
 [ext_resource path="res://assets/knight/gfx/Run (1).png" type="Texture" id=2]
@@ -25,15 +25,36 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 32, 57 )
+extents = Vector2( 30, 55 )
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="Animation" id=2]
 
-animations = [ { "frames":[ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ) ], "loop":true, "name":"default", "speed":5.0 } ]
+resource/name = "blinking"
+length = 2.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprites:visibility/opacity")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.1, 0.2, 0.3, 0.4, 2 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1.0, 0.0, 1.0, 0.0, 0.5, 1.0 ]
+}
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="SpriteFrames" id=3]
 
-resource/name = "attack"
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=4]
+
 length = 0.5
 loop = false
 step = 0.1
@@ -41,33 +62,54 @@ tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0, 0.5 ), "transitions":FloatArray( 1, 1 ), "update":0, "values":[ 10, 19 ] }
+tracks/0/keys = {
+"times": FloatArray( 0, 0.5 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ 10, 19 ]
+}
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 
-length = 0.5
+length = 0.4
 loop = true
 step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0, 0.5 ), "transitions":FloatArray( 1, 1 ), "update":0, "values":[ 0, 9 ] }
+tracks/0/keys = {
+"times": FloatArray( 0, 0.4 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 9 ]
+}
 
 [node name="knight" type="KinematicBody2D"]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, -0.35849, 0 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 1 )
 
+[node name="damaged" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/blinking = SubResource( 2 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
 [node name="sprites" type="AnimatedSprite" parent="."]
 
-frames = SubResource( 2 )
+frames = SubResource( 3 )
 animation = "default"
 frame = 19
 
@@ -76,8 +118,8 @@ frame = 19
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/attack = SubResource( 3 )
-anims/run = SubResource( 4 )
+anims/attack = SubResource( 4 )
+anims/run = SubResource( 5 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
@@ -85,7 +127,6 @@ autoplay = "run"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-transform/pos = Vector2( -0.35849, 0 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
@@ -101,10 +142,9 @@ limit/left = 0
 limit/top = 0
 limit/right = 10000000
 limit/bottom = 720
-limit/smoothed = true
 drag_margin/h_enabled = true
 drag_margin/v_enabled = true
-smoothing/enable = false
+smoothing/enable = true
 smoothing/speed = 5.0
 drag_margin/left = 0.2
 drag_margin/top = 0.2
@@ -113,28 +153,25 @@ drag_margin/bottom = 0.2
 
 [node name="check_down" type="RayCast2D" parent="."]
 
-transform/pos = Vector2( -28.4602, 57.7109 )
+transform/pos = Vector2( -32, 56 )
 enabled = true
-exclude_parent = true
-cast_to = Vector2( 32, 0 )
+cast_to = Vector2( 64, 0 )
 layer_mask = 1
 type_mask = 15
 
 [node name="check_right" type="RayCast2D" parent="."]
 
-transform/pos = Vector2( 33.3392, -30.1128 )
+transform/pos = Vector2( 34, -30 )
 enabled = true
-exclude_parent = true
 cast_to = Vector2( 0, 64 )
 layer_mask = 1
 type_mask = 15
 
 [node name="check_up" type="RayCast2D" parent="."]
 
-transform/pos = Vector2( -17.3721, -57.8633 )
+transform/pos = Vector2( -22, -56 )
 enabled = true
-exclude_parent = true
-cast_to = Vector2( 32, 0 )
+cast_to = Vector2( 42, 0 )
 layer_mask = 1
 type_mask = 15
 
@@ -145,17 +182,10 @@ wait_time = 1.5
 one_shot = true
 autostart = false
 
-[node name="damaged" type="Timer" parent="."]
-
-process_mode = 1
-wait_time = 2.5
-one_shot = true
-autostart = false
+[connection signal="finished" from="damaged" to="." method="set" binds= [ "shield", false ]]
 
 [connection signal="finished" from="sprites/AnimationPlayer" to="." method="_on_AnimationPlayer_finished"]
 
 [connection signal="timeout" from="attack_cooloff" to="." method="_on_attack_cooloff_timeout"]
-
-[connection signal="timeout" from="damaged" to="." method="_on_damaged_timeout"]
 
 

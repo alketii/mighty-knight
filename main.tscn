@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=16 format=1]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
 [ext_resource path="res://assets/knight/knight.tscn" type="PackedScene" id=2]
@@ -7,8 +7,124 @@
 [ext_resource path="res://assets/icons/attack.png" type="Texture" id=5]
 [ext_resource path="res://assets/icons/attack_cool.png" type="Texture" id=6]
 [ext_resource path="res://assets/icons/jump.png" type="Texture" id=7]
-[ext_resource path="res://assets/fonts/amaranth_32_black.fnt" type="BitmapFont" id=8]
-[ext_resource path="res://assets/misc/life.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/icons/jump_cool.png" type="Texture" id=8]
+[ext_resource path="res://assets/fonts/amaranth_32_black.fnt" type="BitmapFont" id=9]
+[ext_resource path="res://assets/misc/square.png" type="Texture" id=10]
+
+[sub_resource type="Animation" id=1]
+
+resource/name = "cooloff"
+length = 1.5
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:transform/scale")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 1.5 ),
+"transitions": FloatArray( 2, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:visibility/opacity")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 1.5 ),
+"transitions": FloatArray( 2, 1 ),
+"update": 0,
+"values": [ 0.5, 0.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+
+resource/name = "jumping"
+length = 0.4
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprites/Sprite:transform/scale")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.4 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprites/Sprite1:visibility/opacity")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 0.4 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ 0.5, 0.35 ]
+}
+
+[sub_resource type="Animation" id=3]
+
+resource/name = "point"
+length = 0.2
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect/scale")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.2 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect/pos")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 0.2 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1034, 0 ), Vector2( 1146, 12 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+
+resource/name = "start"
+length = 0.7
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.1, 0.7 ),
+"transitions": FloatArray( 1, 0.25, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 1280, 0 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+
+resource/name = "stop"
+length = 0.6
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.6 ),
+"transitions": FloatArray( 0.25, 1 ),
+"update": 0,
+"values": [ Vector2( -1280, 0 ), Vector2( 0, 0 ) ]
+}
 
 [node name="main" type="Node2D"]
 
@@ -27,6 +143,7 @@ autostart = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
+editor/display_folded = true
 layer = -1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -46,12 +163,13 @@ motion/mirroring = Vector2( 1450, 0 )
 
 [node name="bg" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
 
-transform/pos = Vector2( 640, 360 )
 z/z = -999
 texture = ExtResource( 3 )
+centered = false
 
 [node name="gui" type="CanvasLayer" parent="."]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -65,67 +183,135 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 14.0
 margin/top = 11.0
-margin/right = 80.0
-margin/bottom = 61.0
+margin/right = 90.0
+margin/bottom = 75.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 textures/normal = ExtResource( 4 )
+params/resize_mode = 0
+params/stretch_mode = 0
 
 [node name="attack" type="TextureButton" parent="gui"]
 
+editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 1112.0
-margin/top = 552.0
-margin/right = 1240.0
-margin/bottom = 680.0
+margin/left = 1048.0
+margin/top = 496.0
+margin/right = 1244.0
+margin/bottom = 692.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 textures/normal = ExtResource( 5 )
 textures/disabled = ExtResource( 6 )
+params/resize_mode = 0
+params/stretch_mode = 0
+
+[node name="attack_cooloff" type="AnimationPlayer" parent="gui/attack"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/cooloff = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="Sprite" type="Sprite" parent="gui/attack"]
+
+visibility/opacity = 0.0
+visibility/behind_parent = true
+transform/pos = Vector2( 96, 96 )
+texture = ExtResource( 6 )
 
 [node name="jump" type="TextureButton" parent="gui"]
 
+editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 40.0
-margin/top = 552.0
-margin/right = 168.0
-margin/bottom = 680.0
+margin/top = 496.0
+margin/right = 236.0
+margin/bottom = 692.0
 toggle_mode = false
 click_on_press = true
 enabled_focus_mode = 2
 shortcut = null
 textures/normal = ExtResource( 7 )
+params/resize_mode = 0
+params/stretch_mode = 0
+
+[node name="jumping" type="AnimationPlayer" parent="gui/jump"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/jumping = SubResource( 2 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "jumping"
+
+[node name="Sprites" type="Node2D" parent="gui/jump"]
+
+visibility/visible = false
+transform/pos = Vector2( -40, -552 )
+
+[node name="Sprite" type="Sprite" parent="gui/jump/Sprites"]
+
+visibility/opacity = 0.5
+visibility/behind_parent = true
+transform/pos = Vector2( 136, 648 )
+transform/scale = Vector2( 0.474786, 0.474786 )
+texture = ExtResource( 8 )
+
+[node name="Sprite1" type="Sprite" parent="gui/jump/Sprites"]
+
+visibility/opacity = 0.385609
+visibility/behind_parent = true
+transform/pos = Vector2( 136, 648 )
+transform/scale = Vector2( 2, 2 )
+texture = ExtResource( 7 )
 
 [node name="coins" type="Label" parent="gui"]
 
+anchor/left = 1
+anchor/bottom = 1
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 1146.0
+margin/left = 134.0
 margin/top = 12.0
 margin/right = 1261.0
-margin/bottom = 85.0
-custom_fonts/font = ExtResource( 8 )
+margin/bottom = 635.0
+custom_fonts/font = ExtResource( 9 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "0"
 align = 2
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="gui/coins"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/point = SubResource( 3 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
 [node name="lifes" type="Node" parent="gui"]
-
-[node name="life" parent="gui/lifes" instance=ExtResource( 9 )]
-
-transform/pos = Vector2( 128, 32 )
 
 [node name="random_sword" type="Timer" parent="."]
 
@@ -158,15 +344,44 @@ autostart = true
 [node name="restart" type="Timer" parent="."]
 
 process_mode = 1
-wait_time = 2.0
+wait_time = 10.0
 one_shot = true
 autostart = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+editor/display_folded = true
+layer = 2
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/start = SubResource( 4 )
+anims/stop = SubResource( 5 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "start"
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer"]
+
+transform/scale = Vector2( 1280, 720 )
+texture = ExtResource( 10 )
+centered = false
+modulate = Color( 0, 0, 0, 1 )
 
 [connection signal="timeout" from="random_tile" to="." method="_on_random_tile_timeout"]
 
 [connection signal="pressed" from="gui/restart" to="." method="_on_restart_pressed"]
 
 [connection signal="button_down" from="gui/attack" to="knight" method="_on_attack_button_down"]
+
+[connection signal="finished" from="gui/attack/attack_cooloff" to="knight" method="_on_attack_cooloff_timeout"]
 
 [connection signal="button_down" from="gui/jump" to="knight" method="_on_jump_button_down"]
 

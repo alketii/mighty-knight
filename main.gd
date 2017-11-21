@@ -7,24 +7,28 @@ const sword = preload("res://assets/swords/sword.tscn")
 const spikes = preload("res://assets/spikes/spikes.tscn")
 const life = preload("res://assets/misc/life.tscn")
 const points = preload("res://assets/misc/points.tscn")
-onready var W_SIZE = OS.get_window_size()
-onready var places = [592,464,336,208]
+const menu = preload("res://main_menu.tscn")
+
 var coins = 0
 var coins_life = 0
-var lifes = 3
+var highscore = 0
+
+var lifes = 0
 var tile_z = -2
 
 var active_zombies = false
 var active_spikes = false
 
+onready var W_SIZE = OS.get_window_size()
+onready var places = [592,464,336,208]
 onready var config = ConfigFile.new()
-var highscore = 0
 
 func _ready():
 	config.load("user://settings.cfg")
 	highscore = config.get_value("general","highscore",0)
 	randomize()
-	update_lifes()
+	for i in range(1, 4):
+		add_life()
 	init_tiles()
 	
 func init_tiles():
@@ -74,7 +78,9 @@ func create_random():
 		add_child(tile_new)
 
 func _on_restart_pressed():
-	get_tree().change_scene("res://main_menu.tscn")
+	get_node("gui/restart").set_disabled(true)
+	get_node("CanvasLayer/AnimationPlayer").connect("finished", get_tree(), "reload_current_scene")
+	get_node("CanvasLayer/AnimationPlayer").play("stop")
 
 
 func _on_random_tile_timeout():
@@ -97,11 +103,14 @@ func add_life():
 
 func update_lifes():
 	if lifes >= 0:
-		for c in get_node("gui/lifes").get_children():
-			c.queue_free()
-		for i in range(lifes):
+		var childs = get_node("gui/lifes").get_children()
+		if lifes < childs.size():
+			var life_node = childs[lifes]
+			life_node.get_node("AnimationPlayer").play("loose")
+			life_node.get_node("AnimationPlayer").connect("finished", life_node, "queue_free")
+		elif lifes > childs.size():
 			var life_new = life.instance()
-			life_new.set_pos(Vector2(128+i*40,32))
+			life_new.set_pos(Vector2(88+lifes*40,32))
 			get_node("gui/lifes").add_child(life_new)
 	else:
 		if coins > highscore:
@@ -121,6 +130,17 @@ func add_points(amount,pos):
 		add_life()
 		coins_life -= 100
 	get_node("gui/coins").set_text(str(coins))
+	var r = 1 - (coins/400.0)
+	if (coins/400.0) > 1:
+		r = (coins/400.0) - 1
+	var g = 1 - (coins/200.0)
+	if (coins/200.0) > 1:
+		g = (coins/200.0) - 1
+	var b = 1 - (coins/100.0)
+	if (coins/100.0) > 1:
+		b = (coins/100.0) - 1
+	get_node("gui/coins").set("custom_colors/font_color", Color(r, g, b))
+	get_node("gui/coins/AnimationPlayer").play("point")
 
 func _on_activate_zombies_timeout():
 	active_zombies = true
@@ -130,7 +150,6 @@ func _on_activate_swords_timeout():
 
 func _on_activate_spikes_timeout():
 	active_spikes = true
-
 
 func _on_restart_timeout():
 	get_tree().reload_current_scene()
